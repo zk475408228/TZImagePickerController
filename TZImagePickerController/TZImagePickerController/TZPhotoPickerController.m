@@ -22,6 +22,7 @@
     
     UIView *_bottomToolBar;
     UIButton *_previewButton;
+    UIButton *_showFriendHeadButton;//改
     UIButton *_doneButton;
     UIImageView *_numberImageView;
     UILabel *_numberLabel;
@@ -223,6 +224,20 @@ static CGFloat itemMargin = 5;
         if (_isSelectOriginalPhoto) [self getSelectedPhotoBytes];
     }
     
+    //改
+    if (tzImagePickerVc.allowShowFriendHead) {
+        _showFriendHeadButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_showFriendHeadButton addTarget:self action:@selector(showFriendButtonClick) forControlEvents:UIControlEventTouchUpInside];
+//        [_showFriendHeadButton setImage:[UIImage imageNamedFromMyBundle:@"FriendPic"] forState:UIControlStateNormal];
+        _showFriendHeadButton.titleLabel.font = [UIFont systemFontOfSize:16];
+        [_showFriendHeadButton setTitle:tzImagePickerVc.showFriendHeadBtnTitleStr forState:UIControlStateNormal];
+        [_showFriendHeadButton setTitle:tzImagePickerVc.showFriendHeadBtnTitleStr forState:UIControlStateDisabled];
+        [_showFriendHeadButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_showFriendHeadButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
+        _showFriendHeadButton.enabled = tzImagePickerVc.selectedModels.count;
+    }
+    
+
     _doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
     _doneButton.titleLabel.font = [UIFont systemFontOfSize:16];
     [_doneButton addTarget:self action:@selector(doneButtonClick) forControlEvents:UIControlEventTouchUpInside];
@@ -250,6 +265,7 @@ static CGFloat itemMargin = 5;
     
     [_bottomToolBar addSubview:_divideLine];
     [_bottomToolBar addSubview:_previewButton];
+    [_bottomToolBar addSubview:_showFriendHeadButton];
     [_bottomToolBar addSubview:_doneButton];
     [_bottomToolBar addSubview:_numberImageView];
     [_bottomToolBar addSubview:_numberLabel];
@@ -308,6 +324,18 @@ static CGFloat itemMargin = 5;
         _originalPhotoButton.frame = CGRectMake(CGRectGetMaxX(_previewButton.frame), 0, fullImageWidth + 56, 50);
         _originalPhotoLabel.frame = CGRectMake(fullImageWidth + 46, 0, 80, 50);
     }
+    
+    //改
+    if (tzImagePickerVc.allowShowFriendHead) {
+        CGFloat showFriendHeadBtn_x = CGRectGetMaxX(_previewButton.frame);
+        if (tzImagePickerVc.allowPickingOriginalPhoto) {
+            showFriendHeadBtn_x = CGRectGetMaxX(_originalPhotoLabel.frame) + 10;
+        }
+        CGFloat showFriendHeadWidth = [tzImagePickerVc.showFriendHeadBtnTitleStr tz_calculateSizeWithAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16]} maxSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)].width + 2;
+        _showFriendHeadButton.frame = CGRectMake(showFriendHeadBtn_x+5, 0, showFriendHeadWidth, 50);
+    }
+    
+    
     [_doneButton sizeToFit];
     _doneButton.frame = CGRectMake(self.view.tz_width - _doneButton.tz_width - 12, 0, _doneButton.tz_width, toolBarHeight);
     _numberImageView.frame = CGRectMake(_doneButton.tz_left - 30 - 2, (toolBarHeight - 30) / 2, 30, 30);
@@ -331,6 +359,10 @@ static CGFloat itemMargin = 5;
 - (void)previewButtonClick {
     TZPhotoPreviewController *photoPreviewVc = [[TZPhotoPreviewController alloc] init];
     [self pushPhotoPrevireViewController:photoPreviewVc];
+}
+//改
+- (void)showFriendButtonClick {
+    NSLog(@"zk好友头像显示");
 }
 
 - (void)originalPhotoButtonClick {
@@ -623,6 +655,9 @@ static CGFloat itemMargin = 5;
     _numberImageView.hidden = tzImagePickerVc.selectedModels.count <= 0;
     _numberLabel.hidden = tzImagePickerVc.selectedModels.count <= 0;
     _numberLabel.text = [NSString stringWithFormat:@"%zd",tzImagePickerVc.selectedModels.count];
+    
+    //改
+    _showFriendHeadButton.enabled = tzImagePickerVc.selectedModels.count > 0;
     
     _originalPhotoButton.enabled = tzImagePickerVc.selectedModels.count > 0;
     _originalPhotoButton.selected = (_isSelectOriginalPhoto && _originalPhotoButton.enabled);

@@ -68,6 +68,10 @@
 /// 默认为YES，如果设置为NO,原图按钮将隐藏，用户不能选择发送原图
 @property (nonatomic, assign) BOOL allowPickingOriginalPhoto;
 
+//改
+// 是否可以显示好友的头像
+@property (nonatomic, assign) BOOL allowShowFriendHead;
+
 /// Default is YES, if set NO, user can't picking video.
 /// 默认为YES，如果设置为NO,用户将不能选择视频
 @property (nonatomic, assign) BOOL allowPickingVideo;
@@ -170,6 +174,7 @@
 @property (nonatomic, strong) UIFont *barItemTextFont;
 
 @property (nonatomic, copy) NSString *doneBtnTitleStr;
+@property (nonatomic, copy) NSString *showFriendHeadBtnTitleStr; //改
 @property (nonatomic, copy) NSString *cancelBtnTitleStr;
 @property (nonatomic, copy) NSString *previewBtnTitleStr;
 @property (nonatomic, copy) NSString *fullImageBtnTitleStr;
