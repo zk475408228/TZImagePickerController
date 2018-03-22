@@ -123,6 +123,11 @@
 /// statusBar的样式，默认为UIStatusBarStyleLightContent
 @property (assign, nonatomic) UIStatusBarStyle statusBarStyle;
 
+//改
+//if the photo have not location, Hide the photo, Default is NO
+//隐藏没有经纬度信息的照片(自己添加)
+@property (nonatomic, assign) BOOL hideWhenHaveNotLocation;
+
 #pragma mark -
 /// Single selection mode, valid when maxImagesCount = 1
 /// 单选模式,maxImagesCount为1时才生效

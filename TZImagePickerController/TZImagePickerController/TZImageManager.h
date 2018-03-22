@@ -44,6 +44,10 @@
 @property (nonatomic, assign) NSInteger minPhotoHeightSelectable;
 @property (nonatomic, assign) BOOL hideWhenCanNotSelect;
 
+//改
+// 当图片没有经纬度信息时， 隐藏图片。 默认为NO（自己添加）
+@property (nonatomic, assign) BOOL hideWhenHaveNotLocation;
+
 /// Return YES if Authorized 返回YES如果得到了授权
 - (BOOL)authorizationStatusAuthorized;
 + (NSInteger)authorizationStatus;

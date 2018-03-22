@@ -332,6 +332,17 @@ static dispatch_once_t onceToken;
         if (!allowPickingImage && type == TZAssetModelMediaTypePhotoGif) return nil;
         
         PHAsset *phAsset = (PHAsset *)asset;
+        
+        //改
+        //是否隐藏没有经纬度 信息的图片
+        if (self.hideWhenHaveNotLocation)
+        {
+            //过滤掉没有 经纬度信息的图片
+            if (phAsset.location == NULL) {
+                return nil;
+            }
+        }
+        
         if (self.hideWhenCanNotSelect) {
             // 过滤掉尺寸不满足要求的图片
             if (![self isPhotoSelectableWithAsset:phAsset]) {

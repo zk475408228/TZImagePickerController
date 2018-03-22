@@ -475,6 +475,13 @@
     [TZImageManager manager].hideWhenCanNotSelect = hideWhenCanNotSelect;
 }
 
+//改:是否隐藏没有经纬度的图片
+- (void)setHideWhenHaveNotLocation:(BOOL)hideWhenHaveNotLocation
+{
+    _hideWhenHaveNotLocation = hideWhenHaveNotLocation;
+    [TZImageManager manager].hideWhenHaveNotLocation = hideWhenHaveNotLocation;
+}
+
 - (void)setPhotoPreviewMaxWidth:(CGFloat)photoPreviewMaxWidth {
     _photoPreviewMaxWidth = photoPreviewMaxWidth;
     if (photoPreviewMaxWidth > 800) {
